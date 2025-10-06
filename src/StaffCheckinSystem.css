@@ -1,15 +1,15 @@
-
+/* Mukhya container jismein sab kuch hai - Naya attractive look */
 .main-container {
-  background: rgba(255, 255, 255, 0.95); 
-  border-radius: 25px; 
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 25px;
   padding: 30px 35px;
   box-shadow: 0 10px 40px rgba(8, 20, 54, 0.25);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 20px; 
-  width: 100%; 
-  max-width: 1100px; 
+  margin: 20px;
+  width: 100%;
+  max-width: 1100px;
   position: relative;
   transition: all 0.3s ease-in-out;
 }
@@ -19,7 +19,7 @@
   box-shadow: 0 15px 50px rgba(8, 20, 54, 0.3);
 }
 
-
+/* Search bar aur Add button ka container */
 .search-and-add-container {
   display: flex;
   justify-content: space-between;
@@ -44,11 +44,11 @@
 }
 .search-container input:focus {
   outline: none;
-  border-color: #667eea; 
+  border-color: #667eea;
   box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
 }
 
-
+/* Naya staff add karne ka button */
 .add-staff-button {
   padding: 14px 25px;
   background: linear-gradient(90deg, #16a085, #1abc9c);
@@ -66,17 +66,17 @@
   box-shadow: 0 6px 20px rgba(22, 160, 133, 0.4);
 }
 
-
+/* Table ki styling */
 .table-container {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: auto; /* Yatayata scrolling ke liye zaroori */
 }
 table {
   width: 100%;
   border-collapse: collapse;
 }
 th, td {
-  padding: 18px 15px; 
+  padding: 18px 15px;
   text-align: left;
   vertical-align: middle;
   border-bottom: 1px solid #ecf0f1;
@@ -88,7 +88,7 @@ thead {
 th {
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 13px; 
+  font-size: 13px;
   letter-spacing: 0.5px;
 }
 th:first-child {
@@ -101,6 +101,7 @@ tbody tr:hover {
   background-color: #f8f9fa;
 }
 
+/* Jab table khaali ho */
 .no-data-cell {
   text-align: center;
   color: #7f8c8d;
@@ -109,7 +110,7 @@ tbody tr:hover {
   font-style: italic;
 }
 
-
+/* Actions column ke buttons */
 .action-buttons-wrapper {
   display: flex;
   gap: 10px;
@@ -139,7 +140,9 @@ tbody tr:hover {
   transform: scale(1.05);
 }
 
-
+/* ======================================= */
+/* MODAL KI STYLES AB ISI FILE MEIN HAIN   */
+/* ======================================= */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -240,5 +243,68 @@ tbody tr:hover {
   background-color: #2980b9;
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}
+
+/* ======================================= */
+/* RESPONSIVE DESIGN FOR ALL DEVICES       */
+/* ======================================= */
+
+/* Tablets ke liye (768px tak) */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 20px;
+    margin: 15px;
+  }
+
+  .search-and-add-container {
+    flex-direction: column; /* Items ko ek ke neeche ek rakhein */
+    align-items: stretch;  /* Poori width lein */
+    gap: 15px;
+  }
+
+  th, td {
+    padding: 14px 12px; /* Thoda kam padding */
+    font-size: 14px; /* Font size chhota karein */
+  }
+
+  .action-button {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile Phones ke liye (480px tak) */
+@media (max-width: 480px) {
+  .main-container {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 20px;
+  }
+  
+  th {
+    font-size: 11px; /* Header font aur chhota */
+  }
+
+  th, td {
+    padding: 12px 8px; /* Aur kam padding */
+  }
+
+  .add-staff-button {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  .action-buttons-wrapper {
+    flex-direction: column; /* Chhote screens par buttons ko ek ke neeche ek rakhein */
+    align-items: flex-start;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.3rem;
+  }
 }
 
