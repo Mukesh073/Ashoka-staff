@@ -1,85 +1,56 @@
-/* Google Fonts se 'Poppins' font import karein */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-/* Poori body ke liye base styles with a new animated background */
+
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif; /* Naya font apply karein */
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Ek naya, zyada vibrant gradient */
   background: linear-gradient(270deg, #89f7fe, #66a6ff, #4e54c8, #764ba2);
   color: #333;
-  background-size: 400% 400%; /* Gradient ko animate karne ke liye size badhayein */
-  animation: moveGradient 20s ease infinite; /* Animation apply karein */
+  background-size: 400% 400%;
+  animation: moveGradient 20s ease infinite;
 }
 
-/* Background animation ke liye Keyframes */
 @keyframes moveGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-
-/* App container jo sab kuch center karega */
 .App {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Horizontally center */
-  justify-content: center; /* Vertically center */
-  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/* Mukhya Heading with a more refined look and hover effect */
+
 .App h1 {
-  font-size: 3.2rem; /* Thoda sa bada font size */
-  font-weight: 700; /* Font ko thoda bold karein */
+  font-size: clamp(2rem, 5vw, 3.2rem); /* Responsive font size */
+  font-weight: 700;
   color: white;
   margin-bottom: 25px;
   text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   text-align: center;
-  letter-spacing: 1.5px; /* अक्षरों के बीच थोड़ी सी जगह */
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Behtar transition effect */
+  letter-spacing: 1.5px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Heading par mouse le jaane par effect */
 .App h1:hover {
-    transform: scale(1.08) rotate(-2deg); /* Thoda sa ghumayein aur bada karein */
-    text-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
+  transform: scale(1.05);
+  text-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 
-/* ======================================= */
-/* RESPONSIVE DESIGN FOR ALL DEVICES       */
-/* ======================================= */
 
-/* Tablets ke liye (768px tak) */
-@media (max-width: 768px) {
-  .App {
-    padding: 15px; /* Kam padding */
-    justify-content: flex-start; /* Content upar se shuru ho */
-    padding-top: 40px;
-  }
-
-  .App h1 {
-    font-size: 2.5rem; /* Chhota font size */
-  }
-}
-
-/* Mobile phones ke liye (480px tak) */
-@media (max-width: 480px) {
-    .App h1 {
-        font-size: 2rem; /* Mobile ke liye aur chhota */
-    }
-}
 

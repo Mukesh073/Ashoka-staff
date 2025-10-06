@@ -7,9 +7,9 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 20px;
-  width: 100%;
-  max-width: 1100px;
+  margin: 0;
+  width: 90%;
+  max-width: 700px;
   position: relative;
   transition: all 0.3s ease-in-out;
 }
@@ -19,7 +19,7 @@
   box-shadow: 0 15px 50px rgba(8, 20, 54, 0.3);
 }
 
-/* Search bar aur Add button ka container */
+
 .search-and-add-container {
   display: flex;
   justify-content: space-between;
@@ -48,7 +48,7 @@
   box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
 }
 
-/* Naya staff add karne ka button */
+
 .add-staff-button {
   padding: 14px 25px;
   background: linear-gradient(90deg, #16a085, #1abc9c);
@@ -66,10 +66,10 @@
   box-shadow: 0 6px 20px rgba(22, 160, 133, 0.4);
 }
 
-/* Table ki styling */
+
 .table-container {
   width: 100%;
-  overflow-x: auto; /* Yatayata scrolling ke liye zaroori */
+  overflow-x: auto;
 }
 table {
   width: 100%;
@@ -101,7 +101,7 @@ tbody tr:hover {
   background-color: #f8f9fa;
 }
 
-/* Jab table khaali ho */
+
 .no-data-cell {
   text-align: center;
   color: #7f8c8d;
@@ -110,7 +110,7 @@ tbody tr:hover {
   font-style: italic;
 }
 
-/* Actions column ke buttons */
+
 .action-buttons-wrapper {
   display: flex;
   gap: 10px;
@@ -140,9 +140,7 @@ tbody tr:hover {
   transform: scale(1.05);
 }
 
-/* ======================================= */
-/* MODAL KI STYLES AB ISI FILE MEIN HAIN   */
-/* ======================================= */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -253,18 +251,18 @@ tbody tr:hover {
 @media (max-width: 768px) {
   .main-container {
     padding: 20px;
-    margin: 15px;
+    margin: 40px auto; /* Add margin for spacing on tablet/mobile */
   }
 
   .search-and-add-container {
-    flex-direction: column; /* Items ko ek ke neeche ek rakhein */
-    align-items: stretch;  /* Poori width lein */
+    flex-direction: column;
+    align-items: stretch;
     gap: 15px;
   }
 
   th, td {
-    padding: 14px 12px; /* Thoda kam padding */
-    font-size: 14px; /* Font size chhota karein */
+    padding: 14px 12px;
+    font-size: 14px;
   }
 
   .action-button {
@@ -277,16 +275,16 @@ tbody tr:hover {
 @media (max-width: 480px) {
   .main-container {
     padding: 15px;
-    margin: 10px;
+    margin: 0; /* BADLAV: Margin yahan bhi 0 rahega */
     border-radius: 20px;
   }
   
   th {
-    font-size: 11px; /* Header font aur chhota */
+    font-size: 11px;
   }
 
   th, td {
-    padding: 12px 8px; /* Aur kam padding */
+    padding: 12px 8px;
   }
 
   .add-staff-button {
@@ -295,7 +293,7 @@ tbody tr:hover {
   }
 
   .action-buttons-wrapper {
-    flex-direction: column; /* Chhote screens par buttons ko ek ke neeche ek rakhein */
+    flex-direction: column;
     align-items: flex-start;
   }
 

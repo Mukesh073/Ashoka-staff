@@ -1,5 +1,8 @@
+
 import React, { useState, useEffect } from "react";
 import "./StaffCheckinSystem.css";
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "/api/guests";
 
 
 
@@ -12,8 +15,8 @@ const AddStaffModal = ({ isOpen, onClose, onAddStaff }) => {
     e.preventDefault();
     if (staffName.trim()) {
       onAddStaff({ name: staffName });
-      setStaffName(""); // Form reset karein
-      onClose(); // Modal band karein
+      setStaffName(""); 
+      onClose(); 
     }
   };
 
@@ -75,61 +78,112 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message, confirm
 
 //================================================
 
+
 const StaffCheckinSystem = () => {
   const [staffList, setStaffList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStaff, setFilteredStaff] = useState([]);
-
-
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [confirmationModalState, setConfirmationModalState] = useState({
     isOpen: false,
     action: null,
     staff: null,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  // Fetch all guests on mount
   useEffect(() => {
-    const results = staffList.filter((staff) =>
-      staff.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredStaff(results);
+    fetchStaffList();
+    // eslint-disable-next-line
+  }, []);
+
+  // Search guests by name
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setFilteredStaff(staffList);
+    } else {
+      searchGuests(searchTerm);
+    }
+    // eslint-disable-next-line
   }, [searchTerm, staffList]);
 
-  const handleAddStaff = (newStaff) => {
-    setStaffList((prevList) => [
-      ...prevList,
-      {
-        id: Date.now(),
-        ...newStaff,
-        checkinTime: new Date().toLocaleString(),
-        checkoutTime: null,
-      },
-    ]);
+  const fetchStaffList = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(API_BASE);
+      if (!res.ok) throw new Error("Failed to fetch staff list");
+      const data = await res.json();
+      setStaffList(data);
+      setFilteredStaff(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleReCheckIn = (staffId) => {
-    setStaffList(
-      staffList.map((staff) =>
-        staff.id === staffId
-          ? {
-              ...staff,
-              checkinTime: new Date().toLocaleString(),
-              checkoutTime: null,
-            }
-          : staff
-      )
-    );
+  const searchGuests = async (name) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_BASE}/search?name=${encodeURIComponent(name)}`);
+      if (!res.ok) throw new Error("Failed to search guests");
+      const data = await res.json();
+      setFilteredStaff(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
-  
-  const handleCheckout = (staffId) => {
-    setStaffList(
-        staffList.map((staff) =>
-          staff.id === staffId
-            ? { ...staff, checkoutTime: new Date().toLocaleString() }
-            : staff
-        )
-      );
-  }
+
+  const handleAddStaff = async (newStaff) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newStaff.name }),
+      });
+      if (!res.ok) throw new Error("Failed to add staff");
+      await fetchStaffList();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReCheckIn = async (staffId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_BASE}/${staffId}/checkin`, { method: "PUT" });
+      if (!res.ok) throw new Error("Failed to check in staff");
+      await fetchStaffList();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCheckout = async (staffId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_BASE}/${staffId}/checkout`, { method: "PUT" });
+      if (!res.ok) throw new Error("Failed to check out staff");
+      await fetchStaffList();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleOpenConfirmationModal = (action, staff) => {
     setConfirmationModalState({ isOpen: true, action, staff });
@@ -139,12 +193,12 @@ const StaffCheckinSystem = () => {
     setConfirmationModalState({ isOpen: false, action: null, staff: null });
   };
 
-  const handleConfirmAction = () => {
+  const handleConfirmAction = async () => {
     const { action, staff } = confirmationModalState;
     if (action === 'checkout') {
-        handleCheckout(staff.id);
+      await handleCheckout(staff.id);
     } else if (action === 'checkin') {
-      handleReCheckIn(staff.id);
+      await handleReCheckIn(staff.id);
     }
     handleCloseConfirmationModal();
   };
