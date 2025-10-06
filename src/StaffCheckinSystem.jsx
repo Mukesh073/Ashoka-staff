@@ -8,15 +8,17 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || "/api/guests";
 
 const AddStaffModal = ({ isOpen, onClose, onAddStaff }) => {
   const [staffName, setStaffName] = useState("");
+  const [guests, setGuests] = useState(1);
 
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (staffName.trim()) {
-      onAddStaff({ name: staffName });
-      setStaffName(""); 
-      onClose(); 
+    if (staffName.trim() && guests > 0) {
+      onAddStaff({ name: staffName, guests: Number(guests) });
+      setStaffName("");
+      setGuests(1);
+      onClose();
     }
   };
 
@@ -37,6 +39,17 @@ const AddStaffModal = ({ isOpen, onClose, onAddStaff }) => {
               autoFocus
             />
           </div>
+          {/* <div className="form-group">
+            <label htmlFor="guests">Number of Guests</label>
+            <input
+              type="number"
+              id="guests"
+              min="1"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              required
+            />
+          </div> */}
           <div className="modal-actions">
             <button type="button" className="btn btn-cancel" onClick={onClose}>
               Cancel
@@ -146,7 +159,7 @@ const StaffCheckinSystem = () => {
       const res = await fetch(API_BASE, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newStaff.name }),
+        body: JSON.stringify({ name: newStaff.name, guests: newStaff.guests }),
       });
       if (!res.ok) throw new Error("Failed to add staff");
       await fetchStaffList();
@@ -196,9 +209,9 @@ const StaffCheckinSystem = () => {
   const handleConfirmAction = async () => {
     const { action, staff } = confirmationModalState;
     if (action === 'checkout') {
-      await handleCheckout(staff.id);
+  await handleCheckout(staff._id);
     } else if (action === 'checkin') {
-      await handleReCheckIn(staff.id);
+  await handleReCheckIn(staff._id);
     }
     handleCloseConfirmationModal();
   };
@@ -245,7 +258,7 @@ const StaffCheckinSystem = () => {
           <tbody>
             {filteredStaff.length > 0 ? (
               filteredStaff.map((staff, index) => (
-                <tr key={staff.id}>
+                <tr key={staff._id}>
                   <td>{index + 1}</td>
                   <td>{staff.name}</td>
                   <td>{staff.checkinTime}</td>
